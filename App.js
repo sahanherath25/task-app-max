@@ -1,6 +1,6 @@
 import {StatusBar} from 'expo-status-bar';
 import {useState} from "react"
-import {Text, TextInput, View, StyleSheet, Button, FlatList, TextComponent} from "react-native";
+import {Text, TextInput, View, StyleSheet, Button, FlatList, ScrollView} from "react-native";
 
 //TODO Defining State
 
@@ -26,14 +26,14 @@ export default function App() {
     return (
         <View style={styles.appContainer}>
 
-            <View  style={styles.inputContainer}>
+            <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.textInput}
                     placeholder={"Enter Your Goal"}
                     onChangeText={golaInputHandler}
                 />
 
-                <View >
+                <View>
 
                 </View>
                 <Button
@@ -42,11 +42,16 @@ export default function App() {
                 />
             </View>
             <View style={styles.goalsContainer}>
-                <FlatList  data={courseGoal} renderItem={({item}) => {
-                    return <Text style={styles.goalStyle}>{item}</Text>
-                }}
-                />
-
+                    <FlatList
+                        data={courseGoal}
+                        renderItem={({item}) => {
+                            return (
+                            <View style={styles.goalStyle}>
+                                <Text style={styles.goalText}>{item}</Text>
+                            </View>
+                        )
+                        }}
+                    />
             </View>
         </View>
 
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
     },
     textInput: {
         borderStyle: "solid",
-        borderColor: "#000",
+        borderColor: "#DDDDDD",
         borderWidth: 2,
         marginRight: 8,
         width: "70%",
@@ -85,7 +90,14 @@ const styles = StyleSheet.create({
         flex: 5
     },
     goalStyle: {
+        margin: 8,
+        padding: 14,
+        borderRadius: 8,
+        backgroundColor: "#E59BE9",
 
+    },
+    goalText:{
+        color: "#fff"
     }
 
 
