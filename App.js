@@ -1,65 +1,92 @@
 import {StatusBar} from 'expo-status-bar';
-import React from "react"
-import {Text, TextInput, View, StyleSheet, Button} from "react-native";
+import {useState} from "react"
+import {Text, TextInput, View, StyleSheet, Button, FlatList, TextComponent} from "react-native";
+
+//TODO Defining State
 
 
 export default function App() {
+
+    const [enteredGoalText, setEnteredGoalText] = useState("")
+    const [courseGoal, setCourseGoal] = useState([])
+
+    const golaInputHandler = (enteredText) => {
+
+        setEnteredGoalText(enteredText)
+        console.log(enteredText)
+    }
+
+    const addGoalHandler = () => {
+        console.log("ENTERED GOAL IS ", enteredGoalText)
+        setCourseGoal((currentGoals) => {
+            return [...currentGoals, enteredGoalText]
+        })
+    }
+
     return (
-            <View style={styles.colorContainer}>
-                <View style={styles.redBox}><Text>1</Text></View>
-                <View style={styles.blueBox}><Text>1</Text></View>
-                <View style={styles.greenBox}><Text>1</Text></View>
+        <View style={styles.appContainer}>
+
+            <View  style={styles.inputContainer}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder={"Enter Your Goal"}
+                    onChangeText={golaInputHandler}
+                />
+
+                <View >
+
+                </View>
+                <Button
+                    title={"Add Goral"}
+                    onPress={addGoalHandler}
+                />
             </View>
+            <View style={styles.goalsContainer}>
+                <FlatList  data={courseGoal} renderItem={({item}) => {
+                    return <Text style={styles.goalStyle}>{item}</Text>
+                }}
+                />
+
+            </View>
+        </View>
 
     );
 }
 
 const styles = StyleSheet.create({
 
-    colorContainer: {
-        width:"80%",
-        height:300,
-        flexDirection:"row",
-        // alignItems:"center",
-        justifyContent:"center",
-       marginVertical:"auto",
-        marginHorizontal:"auto",
-    },
-    redBox: {
-        backgroundColor: "#fc0505",
-        flex:1,
-    },
-    blueBox: {
-        backgroundColor: "#3058ee",
-        flex:2,
-    },
-    greenBox: {
-        flex:3,
-        backgroundColor: "#37ec07",
-    },
-
-
     appContainer: {
+        paddingTop: 50,
+        paddingHorizontal: 16,
+        flex: 1,
         borderStyle: "solid",
-        borderColor: "#f53",
-        borderWidth: 2,
+        borderColor: "#e05f5f",
+        borderWidth: 1
     },
     inputContainer: {
         flexDirection: "row",
         borderStyle: "solid",
-        borderColor: "#000",
-        borderWidth: 1,
-        justifyContent: "space-between"
+        borderBottomColor: "#000",
+        marginBottom: 24,
+        borderBottomWidth: 1,
+        alignItems: "center",
+        justifyContent: "space-between",
+        flex: 1,
     },
     textInput: {
         borderStyle: "solid",
-        borderColor: "#fa0606",
+        borderColor: "#000",
         borderWidth: 2,
-        width: "80%",
         marginRight: 8,
+        width: "70%",
         padding: 8
     },
+    goalsContainer: {
+        flex: 5
+    },
+    goalStyle: {
 
+    }
 
 
 });
